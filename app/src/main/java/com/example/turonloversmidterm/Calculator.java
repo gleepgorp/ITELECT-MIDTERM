@@ -17,6 +17,7 @@ public class Calculator extends AppCompatActivity {
     TextView resultsTV;
 
     String workings = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,9 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void clearOnClick(View view) {
+        workingsTV.setText("");
+        workings = "";
+        resultsTV.setText("");
     }
 
     public void parenthesesOnClick(View view) {

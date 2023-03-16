@@ -13,6 +13,10 @@ import javax.script.ScriptException;
 
 public class Calculator extends AppCompatActivity {
 
+    TextView workingsTV;
+    TextView resultsTV;
+
+    String workings = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

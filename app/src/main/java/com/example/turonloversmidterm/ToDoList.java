@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -46,7 +47,7 @@ public class ToDoList extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // Remove the item fro  m the list and update the adapter
+                // Remove the item from the list and update the adapter
                 items.remove(i);
                 itemsAdapter.notifyDataSetChanged();
 
@@ -60,6 +61,31 @@ public class ToDoList extends AppCompatActivity {
                 return true;
             }
         });
+
+        // Add click listener for the delete button
+        itemsAdapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.itemText, items) {
+            @Override
+            public View getView(final int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                // Get the delete button from the list item layout
+                Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
+
+                // Set click listener for the delete button
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Remove the item from the list and update the adapter
+                        items.remove(position);
+                        itemsAdapter.notifyDataSetChanged();
+                    }
+                });
+
+                return view;
+            }
+        };
+
+        listView.setAdapter(itemsAdapter);
     }
 
 

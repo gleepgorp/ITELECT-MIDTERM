@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,35 +36,46 @@ public class ToDoList extends AppCompatActivity {
                 addItem(view);
             }
         });
-            items = new ArrayList<>();
-            itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
-            listView.setAdapter(itemsAdapter);
-            setUpListViewListener();
+        items = new ArrayList<>();
+        itemsAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.itemText, items);
+        listView.setAdapter(itemsAdapter);
+        setUpListViewListener();
     }
 
     private void setUpListViewListener() {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Context context = getApplicationContext();
-                Toast.makeText(context,"Item Removed",Toast.LENGTH_LONG).show();
+                // Remove the item fro  m the list and update the adapter
                 items.remove(i);
                 itemsAdapter.notifyDataSetChanged();
+
+                // Show a toast to indicate that the item has been deleted
+                Context context = getApplicationContext();
+                CharSequence text = "Item deleted";
+                int duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
+
+                // Return true to indicate that the long press event has been handled
                 return true;
             }
         });
     }
+
+
 
     private void addItem(View view) {
         EditText input = findViewById(R.id.editTextTextPersonName);
         String itemText = input.getText().toString();
 
         if(!(itemText.equals(""))){
-            itemsAdapter.add(itemText);
+            items.add(itemText);
+            itemsAdapter.notifyDataSetChanged();
             input.setText("");
         }
         else{
             Toast.makeText(getApplicationContext(),"Please Enter a Text...",Toast.LENGTH_LONG).show();
         }
     }
+
 }
